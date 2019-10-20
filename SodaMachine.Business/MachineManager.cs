@@ -39,20 +39,21 @@ namespace SodaMachine.Business
         /// Invokes a commands on the <c>Machine</c> instance
         /// </summary>
         /// <param name="commandType">One of the <c>Command</c> enum</param>
-        /// <param name="commandInput">Input for machine commands wrapped in a <c>CommandInput</c> instance</param>
-        public void ExecuteCommand(Command commandType, CommandParameter commandInput)
+        /// <param name="commandInput">Dynamic Input recieved from MachineClient. 
+        /// Manager must cast it to the type the command requires, trusting the validations in client to filter out incorrect command parameters entered by user</param>
+        public void ExecuteCommand(Command commandType, object commandInput)
         {
             IMachineCommand machineCommand;
             switch (commandType)
             {
                 case Command.InsertMoney:
-                    machineCommand = new InsertMoneyCommand(commandInput.IntParameter);
+                    machineCommand = new InsertMoneyCommand((int)commandInput);
                     break;
                 case Command.Order:
-                    machineCommand = new OrderCommand(commandInput.StrParameter);
+                    machineCommand = new OrderCommand((string)commandInput);
                     break;
                 case Command.SmsOrder:
-                    machineCommand = new SmsOrderCommand(commandInput.StrParameter);
+                    machineCommand = new SmsOrderCommand((string)commandInput);
                     break;
                 case Command.Recall:
                     machineCommand = new RecallCommand();
@@ -61,15 +62,6 @@ namespace SodaMachine.Business
             }
             _machine = machineCommand.Execute(_machine);
         }
-    }
-
-    /// <summary>
-    /// Encapsulates the data types that both <c>MachineClient</c> and <c>MachineManager</c> must support.
-    /// </summary>
-    public struct CommandParameter
-    {
-        public int IntParameter;
-        public string StrParameter;
     }
 
     /// <summary>

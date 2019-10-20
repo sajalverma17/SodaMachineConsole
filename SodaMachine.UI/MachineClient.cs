@@ -39,7 +39,6 @@ namespace SodaMachine.UI
                     {
                         //If the command is identified and the parameter is valid for the identified command, parse the parameter
                         var commandParameter = MachineClientHelper.GetCommandParameter(userInput, command);
-
                         machineManager.ExecuteCommand(command, commandParameter);
                     }
                     else

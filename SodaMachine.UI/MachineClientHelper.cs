@@ -129,19 +129,20 @@ namespace SodaMachine.UI
         /// <param name="input">The user input</param>
         /// <param name="commandType">The machine command for which parameter has to be parsed</param>
         /// <returns></returns>
-        public static CommandParameter GetCommandParameter(string input, Command commandType)
+        public static object GetCommandParameter(string input, Command commandType)
         {
             var inputs = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            var commandParameter = new CommandParameter();
+            object commandParameter = null;
+            
             if (commandType == Command.InsertMoney)
             {
-                commandParameter.IntParameter = int.Parse(inputs[inputs.Length - 1]);
+                commandParameter = int.Parse(inputs[inputs.Length - 1]);
             }
             else if (commandType == Command.Order || commandType == Command.SmsOrder)
             {
                 //Both the commands require string input parameters, i.e, the soda name, so no parsing required after user input.
-                commandParameter.StrParameter = inputs[inputs.Length - 1];
+                commandParameter = inputs[inputs.Length - 1];
             }
 
             return commandParameter;

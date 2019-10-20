@@ -41,7 +41,9 @@ namespace SodaMachine.Business.Entities
                 Console.WriteLine("Returning " + change + " in change");
             }
             else
+            {
                 Console.WriteLine(invalidResult);
+            }
         }
 
         public void SmsOrder(string soda)
@@ -50,15 +52,17 @@ namespace SodaMachine.Business.Entities
             if (IsOrderValid(soda, out invalidResult))
             {
                 //Send sms for the order
-                Console.WriteLine("Giving out a " + soda);                
+                Console.WriteLine("Giving out a " + soda);
             }
             else
+            {
                 Console.WriteLine(invalidResult);
+            }
         }
 
         public void Recall()
         {
-            Console.WriteLine("Returning money to customer");
+            Console.WriteLine("Returning "+Money+" to customer");
             Money = 0;
         }
     #endregion 
